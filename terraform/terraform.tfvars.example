@@ -1,0 +1,5 @@
+# Required AWS and Dynatrace parameters
+aws_region           = "us-east-1"
+cluster_name         = "my-fargate-cluster"
+dynatrace_api_url    = "https://abc12345.live.dynatrace.com"
+dynatrace_paas_token = "dt0c01.XXXXXXXXXXXXXXX.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
