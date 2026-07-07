@@ -10,14 +10,11 @@ data "aws_subnets" "default" {
   }
 }
 
-# ECS Cluster
-resource "aws_ecs_cluster" "main" {
-  name = var.cluster_name
-
-  setting {
-    name  = "containerInsights"
-    value = "enabled"
-  }
+# Existing ECS cluster to deploy the instrumented workload into.
+# This is a data source (lookup), not a resource — Terraform does NOT create or manage
+# the cluster; it must already exist under the name given in var.cluster_name.
+data "aws_ecs_cluster" "main" {
+  cluster_name = var.cluster_name
 }
 
 # CloudWatch Log Group for ECS logs
@@ -231,7 +228,7 @@ resource "aws_ecs_task_definition" "app" {
 # ECS Service running on Fargate
 resource "aws_ecs_service" "app" {
   name            = "${var.cluster_name}-app-service"
-  cluster         = aws_ecs_cluster.main.id
+  cluster         = data.aws_ecs_cluster.main.arn
   task_definition = aws_ecs_task_definition.app.arn
   desired_count   = 1
   launch_type     = "FARGATE"

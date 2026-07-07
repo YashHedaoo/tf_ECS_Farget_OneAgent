@@ -45,7 +45,7 @@ Reference: [Dynatrace — Monitor AWS Fargate](https://docs.dynatrace.com/docs/i
 
 | Resource | File | Purpose |
 |---|---|---|
-| ECS cluster (Container Insights on) | `ecs.tf` | Runs the Fargate service |
+| ECS cluster | `ecs.tf` | **Looked up, not created** — `data "aws_ecs_cluster"` on `var.cluster_name`; must already exist |
 | ECS task definition (2 containers) | `ecs.tf` | OneAgent init + app |
 | ECS service (Fargate, public IP) | `ecs.tf` | Keeps 1 task running |
 | Execution + task IAM roles | `ecs.tf` | Pull images, read SSM, write logs |
@@ -58,6 +58,8 @@ Reference: [Dynatrace — Monitor AWS Fargate](https://docs.dynatrace.com/docs/i
 
 ## Prerequisites
 
+- An **existing ECS cluster** whose name you pass as `cluster_name` (this config deploys
+  into it; it does not create the cluster).
 - **Terraform** >= 1.0 and **AWS credentials** with permission to manage ECS, IAM, SSM,
   CloudWatch, S3, and DynamoDB.
 - A **Dynatrace environment** with:
@@ -116,7 +118,7 @@ dynatrace_paas_token = "dt0c01.XXXX.XXXX"
 
 | Variable | Required | Default | Description |
 |---|---|---|---|
-| `cluster_name` | yes | — | Name of the ECS cluster; prefixes most resource names |
+| `cluster_name` | yes | — | Name of an **existing** ECS cluster to deploy into; also prefixes resource names |
 | `dynatrace_api_url` | yes | — | Dynatrace environment API URL |
 | `dynatrace_paas_token` | yes | — | Dynatrace PaaS token (sensitive) |
 | `aws_region` | no | `us-east-1` | AWS region to deploy into |

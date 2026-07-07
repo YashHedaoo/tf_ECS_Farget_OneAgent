@@ -4,10 +4,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-Terraform configuration that provisions an AWS ECS Fargate service and instruments it
-with the Dynatrace OneAgent at runtime (no custom application image required). All
-Terraform lives in `terraform/`; there is no application source code in this repo — the
-running container is stock `nginx:alpine`.
+Terraform configuration that deploys an AWS ECS Fargate service into an **existing**
+cluster and instruments it with the Dynatrace OneAgent at runtime (no custom application
+image required). The cluster is a `data` source (`data "aws_ecs_cluster"` on
+`var.cluster_name`) — Terraform does **not** create or manage it; it must already exist.
+All Terraform lives in `terraform/`; there is no application source code in this repo —
+the running container is stock `nginx:alpine`.
 
 ## Commands
 
