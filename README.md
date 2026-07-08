@@ -121,7 +121,7 @@ dynatrace_paas_token = "dt0c01.XXXX.XXXX"
 | `cluster_name` | yes | — | Name of an **existing** ECS cluster to deploy into; also prefixes resource names |
 | `dynatrace_api_url` | yes | — | Dynatrace environment API URL |
 | `dynatrace_paas_token` | yes | — | Dynatrace PaaS token (sensitive) |
-| `aws_region` | no | `us-east-1` | AWS region to deploy into |
+| `aws_region` | yes | — | AWS region to deploy into |
 
 ### Outputs
 
@@ -153,6 +153,7 @@ Configure these **repository secrets** (Settings → Secrets and variables → A
 | Secret | Purpose |
 |---|---|
 | `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` | AWS auth for the runner |
+| `AWS_REGION` | AWS region to deploy into |
 | `TF_STATE_BUCKET` | S3 bucket from bootstrap |
 | `TF_LOCK_TABLE` | DynamoDB table from bootstrap |
 | `ECS_CLUSTER_NAME` | Default cluster name |

@@ -139,12 +139,12 @@ resource "aws_ecs_task_definition" "app" {
       essential  = false
       entryPoint = ["sh", "-c"]
       command = [
-        "set -e && apk add --no-cache wget unzip ca-certificates && ARCHIVE=$(mktemp) && wget -O $ARCHIVE \"$${DT_API_URL}/v1/deployment/installer/agent/unix/paas/latest?Api-Token=$${DT_PAAS_TOKEN}&flavor=musl&include=all\" && unzip -o -d /opt/dynatrace/oneagent $ARCHIVE && rm -f $ARCHIVE"
+        "set -e && apk add --no-cache wget unzip ca-certificates && ARCH=$(uname -m) && if [ \"$ARCH\" = \"arm\" ] || [ \"$ARCH\" = \"arm64\" ] || [ \"$ARCH\" = \"aarch64\" ]; then ARCH=arm; else ARCH=x86; fi && ARCHIVE=$(mktemp) && wget -O $ARCHIVE \"$${DT_API_URL}/v1/deployment/installer/agent/unix/paas/latest?Api-Token=$${DT_PAAS_TOKEN}&arch=$${ARCH}&flavor=musl&include=all\" && unzip -o -d /opt/dynatrace/oneagent $ARCHIVE && rm -f $ARCHIVE"
       ]
       environment = [
         {
           name  = "DT_API_URL"
-          value = var.dynatrace_api_url
+          value = "${var.dynatrace_api_url}/api"
         }
       ]
       secrets = [
