@@ -24,3 +24,6 @@ tfplan
 
 # OS files
 .DS_Store
+
+# Claude Code local instructions (do not commit)
+CLAUDE.md

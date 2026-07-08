@@ -8,13 +8,11 @@ on:
         required: true
         default: "dynatrace-monitored-cluster"
       aws_region:
-        description: "AWS Region"
-        required: true
-        default: "us-east-1"
+        description: "AWS Region (leave blank to use the AWS_REGION secret)"
+        required: false
       dynatrace_api_url:
-        description: "Dynatrace Environment API URL"
-        required: true
-        default: "https://abc12345.live.dynatrace.com"
+        description: "Dynatrace Environment API URL (leave blank to use the DYNATRACE_API_URL secret)"
+        required: false
   push:
     branches:
       - main
